@@ -1,0 +1,143 @@
+.productos-container {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.productos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.productos-title {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    font-size: 0.95rem;
+}
+
+.productos-table thead {
+    background-color: #f8fafc;
+}
+
+.productos-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #4a5568;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.productos-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2d3748;
+}
+
+.productos-table tbody tr:hover {
+    background-color: #f7fafc;
+}
+
+.precio {
+    font-family: monospace;
+    font-weight: 500;
+}
+
+.stock {
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.btn-editar,
+.btn-eliminar {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    background: transparent;
+}
+
+.btn-editar:hover {
+    background-color: #ebf4ff;
+    transform: scale(1.1);
+}
+
+.btn-eliminar:hover {
+    background-color: #fff5f5;
+    transform: scale(1.1);
+}
+
+.empty-row td {
+    padding: 3rem 1rem;
+}
+
+.empty-message {
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 2rem;
+    color: #4a5568;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .productos-container {
+        padding: 1rem;
+    }
+
+    .productos-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .productos-table th,
+    .productos-table td {
+        padding: 0.75rem;
+    }
+}
+
+/* Animación de carga */
+.loading-spinner::after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #4299e1;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+} 
