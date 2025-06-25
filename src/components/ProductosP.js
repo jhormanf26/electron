@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import ProductoForm from './ProductoForm';
 import ProductoList from './ProductoList';
-console.log('✅  productosP.js cargado correctamente');
 
 const Productos = () => {
-   const [vista, setVista] = useState("formulario");
+   const [vista, setVista] = useState("no definido");
 
     return (
-        <div>
+        <div className="productos-container">
             <h2>Control de Ventas</h2>
             <button onClick={() => setVista("formulario")}>Formulario</button>
             <button onClick={() => setVista("Listado")}>Lista</button>

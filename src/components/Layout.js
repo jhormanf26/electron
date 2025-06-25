@@ -19,6 +19,7 @@ const Layout = ({ cerrarSesion }) => {
   };
 
   return (
+
     <div className="layout">
       <div className="sidebar">
         <h3>Menú</h3>
@@ -29,14 +30,19 @@ const Layout = ({ cerrarSesion }) => {
           Cerrar sesión
         </button>
       </div>
-      <div className="main-content">
-        <div className="encabezado-general">
-          <h2>Bienvenido al sistema de administración de billar</h2>
+      <div className="encabezado-general">
+          <h2>Bienvenido</h2>
+          <p>cabezera</p>
+
         </div>
+      <div className="main-content">
         <header>
-          <h1>Panel de Administración</h1>
+          <h1>Contenido</h1>
         </header>
         {renderVista()}
+      </div>
+      <div className="pie-pagina">
+          <h3>Pie de pagina</h3>
       </div>
     </div>
   );

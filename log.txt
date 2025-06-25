@@ -11,3 +11,22 @@
 ✅ Tabla productos verificada/creada correctamente.
 ✅ Tabla productos verificada/creada correctamente.
 ✅ Tabla productos verificada/creada correctamente.
+Error occurred in handler for 'obtener-productos': No handler registered for 'obtener-productos'
+Error occurred in handler for 'obtener-productos': No handler registered for 'obtener-productos'
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.
+✅ Tabla productos verificada/creada correctamente.

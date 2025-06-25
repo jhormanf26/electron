@@ -20,7 +20,7 @@ try {
 }
 
 // 📦 Importar handlers
-  require('./handlers/productos'); // <-- Aquí sí estará todo listo
+const productoHandler = require(path.join(__dirname, 'handlers/productos'));
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
