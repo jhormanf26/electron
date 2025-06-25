@@ -1,32 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import ProductoForm from './components/ProductoForm';
-import ProductoList from './components/ProductoList';
+import Login from './components/Login';
+import Layout from './components/Layout';
 import './styles.css'; // Importa tu archivo CSS si lo tienes
 
 
 const App = () => {
-    
-    const [vista, setVista] = useState("formulario");
+const [logueado, setLogueado] = useState(() => {
+    return localStorage.getItem('logueado') === 'true';
+  });
 
-    return (
-        <div>
-            <h1>Control de Ventas</h1>
-            <button onClick={() => setVista("formulario")}>Formulario</button>
-            <button onClick={() => setVista("Listado")}>Lista</button>
-            {vista === "formulario" && (
-             <>
-             <ProductoForm />
-             </>
-             )}
-           {vista === "Listado" && (
-              <>
-                <ProductoList />
-            </>
-              )}
-         
-           
-        </div>
-    );
+  useEffect(() => {
+    localStorage.setItem('logueado', logueado);
+  }, [logueado]);
+  return logueado ? (
+    <Layout cerrarSesion={() => setLogueado(false)} />
+  ) : (
+    <Login onLoginSuccess={() => setLogueado(true)} />
+  );
 };
 
 export default App;

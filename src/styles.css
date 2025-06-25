@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 100px auto;
+  gap: 10px;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: aqua;
+}
+.encabezado-general {
+  background-color: #f1a7a7;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin-top: 0;
+}

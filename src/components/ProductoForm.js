@@ -15,7 +15,7 @@ const ProductoForm = () => {
         const producto = { nombre, descripcion, precio, stock };
         try {
             const ventas = await registerProducto(producto);
-            const ventasActuales = await getProductos();
+          //  const ventasActuales = await getProductos();
             setNombre('');
             setDescripcion('');
             setPrecio('');
