@@ -20,7 +20,7 @@
   height: 70px;
   background: var(--primary-color);
   border-radius: 5px 5px ;
-  color: var(---black-light-color);
+  color: #FFF;
   font-size: 30px;
   font-weight: 600;
   display: flex;
@@ -55,7 +55,7 @@ form .row input::placeholder {
   position: absolute;
   width: 40px;
   height: 60%;
-  color: var(--black-light-color);
+  color: #FFF;
   font-size: 22px;
   background: var(--primary-color);
   border: 1px solid var(--primary-color);
@@ -67,7 +67,7 @@ form .row input::placeholder {
 
 .login-container form .button input {
   margin-top: 10px;
-  color: var(--black-light-color);
+  color: #FFF;
   font-size: 20px;
   font-weight: 500;
   padding-left: 0px;
