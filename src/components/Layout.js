@@ -11,7 +11,23 @@ const Layout = ({ cerrarSesion }) => {
   useEffect(() => {
     localStorage.setItem('vista', vista);
   }, [vista]);
-  
+
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('mode') === 'dark');
+  const [sidebarClosed, setSidebarClosed] = useState(() => localStorage.getItem('status') === 'close');
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', darkMode);
+    localStorage.setItem('mode', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
+
+  useEffect(() => {
+    const nav = document.querySelector('nav');
+    if (nav) {
+      nav.classList.toggle('close', sidebarClosed);
+    }
+    localStorage.setItem('status', sidebarClosed ? 'close' : 'open');
+  }, [sidebarClosed]);
+
   const renderVista = () => {
     switch (vista) {
       case 'dashboard': return <Dashboard />;
@@ -21,32 +37,61 @@ const Layout = ({ cerrarSesion }) => {
   };
 
   return (
+    <div>
+      <nav className={sidebarClosed ? 'close' : ''}>
+        <div className="logo-name">
+          <div className="logo-image">
+            <img src="images/logo.png" alt="" />
+          </div>
+          <span className="logo_name">Sistema Billar</span>
+        </div>
+        <div className="menu-items">
+          <ul className="nav-links">
+            <li onClick={() => setVista('dashboard')}><a href="#"><i className="uil uil-estate"></i><span className="link-name">Dashboard</span></a></li>
+            <li onClick={() => setVista('productos')}><a href="#"><i className="uil uil-files-landscapes"></i><span className="link-name">Productos</span></a></li>
+            <li onClick={() => setVista('analytics')}><a href="#"><i className="uil uil-chart"></i><span className="link-name">Analytics</span></a></li>
+            <li onClick={() => setVista('like')}><a href="#"><i className="uil uil-thumbs-up"></i><span className="link-name">Like</span></a></li>
+            <li onClick={() => setVista('comment')}><a href="#"><i className="uil uil-comments"></i><span className="link-name">Comment</span></a></li>
+            <li onClick={() => setVista('share')}><a href="#"><i className="uil uil-share"></i><span className="link-name">Share</span></a></li>
+          </ul>
+          <ul className="logout-mode">
+            <li  onClick={() => { localStorage.removeItem('logueado'); cerrarSesion(); }}>
+              <a href="#"><i className="uil uil-signout"></i><span className="link-name">Logout</span></a></li>
+            <li className="mode">
+              <a href="#" onClick={e => { e.preventDefault(); setDarkMode(dm => !dm); }}>
+              <i className="uil uil-moon"></i>
+              <span className="link-name">Dark Mode</span>
+            </a>
+            <div className="mode-toggle" onClick={() => setDarkMode(dm => !dm)}>
+              <span className="switch"></span>
+            </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-    <div className="layout">
-      <div className="sidebar">
-        <h3>Menú</h3>
-        <button onClick={() => setVista('dashboard')}>Dashboard</button>
-        <button onClick={() => setVista('productos')}>Productos</button>
-        <hr />
-        <button onClick={() => { localStorage.removeItem('logueado'); cerrarSesion(); }}>
-          Cerrar sesión
-        </button>
-      </div>
-      <div className="encabezado-general">
-          <h2>Bienvenido</h2>
-          <p>cabezera</p>
+    <section className="dashboard">
+        <div className="top">
+            <i className="uil uil-bars sidebar-toggle"
+            onClick={() => setSidebarClosed(sc => !sc)}
+            style={{ cursor: 'pointer' }}></i>
+            <div className="search-box">
+                <i className="uil uil-search"></i>
+                <input type="text" placeholder="Search here..."/>
+            </div>
+            
+        </div>
+        <div className="dash-content">
+                    {renderVista()}
 
         </div>
-      <div className="main-content">
-        <header>
-          <h1>Contenido</h1>
-        </header>
-        {renderVista()}
-      </div>
-      <div className="pie-pagina">
-          <h3>Pie de pagina</h3>
-      </div>
+        {/* Pie de página siempre visible */}
+        <footer className="dashboard-footer" style={{ marginTop: '2rem', textAlign: 'center', color: '#888' }}>
+            © 2025 Tu Empresa - Todos los derechos reservados
+        </footer>
+    </section>
     </div>
+
   );
 };
 
