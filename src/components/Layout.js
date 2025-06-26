@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from './Dashboard';
 import Productos from './ProductosP';
+import '../styles/layout.css';
+
 
 const Layout = ({ cerrarSesion }) => {
   const [vista, setVista] = useState(() => {
