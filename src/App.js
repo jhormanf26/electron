@@ -22,7 +22,7 @@ const App = () => {
   ) : (
     isDarkMode
       ? <Login2 onLoginSuccess={() => setLogueado(true)} />
-      : <Login onLoginSuccess={() => setLogueado(true)} />
+      : <Login2 onLoginSuccess={() => setLogueado(true)} />
   );
 };
 
