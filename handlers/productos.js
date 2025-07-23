@@ -7,6 +7,10 @@ const isDev = !app.isPackaged;
 const dbFolder = isDev ? path.join(__dirname, '..', 'db') : app.getPath('userData');
 const dbPath = path.join(dbFolder, 'ventas.db');
 
+function openDb() {
+  return new sqlite3.Database(dbPath);
+}
+
 // Asegurarse que la base exista
 if (!isDev && !fs.existsSync(dbPath)) {
   const sourcePath = path.join(process.resourcesPath, 'db', 'ventas.db');
@@ -15,7 +19,7 @@ if (!isDev && !fs.existsSync(dbPath)) {
 
 // Crear tabla si no existe
 function crearTablaProductosSiNoExiste() {
-  const db = new sqlite3.Database(dbPath);
+  const db = openDb();
   db.run(`
     CREATE TABLE IF NOT EXISTS productos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,77 +34,83 @@ function crearTablaProductosSiNoExiste() {
   });
 }
 
-crearTablaProductosSiNoExiste();
-
-// Registrar producto
-ipcMain.handle('registrar-producto', async (_event, producto) => {
-  const db = new sqlite3.Database(dbPath);
-
+//crearTablaProductosSiNoExiste();
+function runQuery(query, params = []) {
   return new Promise((resolve, reject) => {
-    const insertQuery = 'INSERT INTO productos (nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?)';
-    db.run(insertQuery, [producto.nombre, producto.descripcion, producto.precio, producto.stock], function (err) {
+    const db = openDb();
+    db.run(query, params, function (err) {
       if (err) {
-        console.error('Error registrando producto:', err.message);
         reject(err);
       } else {
-        resolve({ id: this.lastID });
+        resolve(this);
       }
       db.close();
     });
   });
+}
+
+// Registrar producto
+ipcMain.handle('registrar-producto', async (_event, producto) => {
+   try {    
+    const insertQuery = 'INSERT INTO productos (nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?)';
+    const result = await runQuery(insertQuery, [producto.nombre, producto.descripcion, producto.precio, producto.stock]);
+    return { id: result.lastID };
+  } catch (err) {
+    console.error('Error registrando producto:', err.message);
+    throw err;
+  }
 });
 
-// Obtener productos
-ipcMain.handle('obtener-productos', async () => {
+function allQuery(query, params = []) {
   return new Promise((resolve, reject) => {
-    const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY);
-    db.all('SELECT * FROM productos', (err, rows) => {
+    const db = openDb();
+    db.all(query, params, (err, rows) => {
       if (err) {
-        console.error('Error consultando DB:', err.message);
-        reject(err.message);
+        reject(err);
       } else {
         resolve(rows);
       }
       db.close();
     });
   });
+}
+
+// Obtener productos
+ipcMain.handle('obtener-productos', async () => {
+  try {
+    const rows = await allQuery('SELECT * FROM productos');
+    return rows;
+  } catch (err) {
+    console.error('Error consultando DB:', err.message);
+    throw err;
+  }
 });
 
 // 🗑️ Eliminar producto
 ipcMain.handle('eliminar-producto', async (_event, id) => {
-  const db = new sqlite3.Database(dbPath);
-  return new Promise((resolve, reject) => {
+  try {
     const query = 'DELETE FROM productos WHERE id = ?';
-    db.run(query, [id], function (err) {
-      if (err) {
-        console.error('Error al eliminar producto:', err.message);
-        reject(err);
-      } else {
-        resolve({ eliminado: this.changes > 0 });
-      }
-      db.close();
-    });
-  });
+    const result = await runQuery(query, [id]);
+    return { eliminado: result.changes > 0 };
+  } catch (err) {
+    console.error('Error al eliminar producto:', err.message);
+    throw err;
+  }
 });
 
 // ✏️ Editar producto
 ipcMain.handle('editar-producto', async (_event, producto) => {
-  const db = new sqlite3.Database(dbPath);
-  return new Promise((resolve, reject) => {
+  try {
     const query = `
       UPDATE productos
       SET nombre = ?, descripcion = ?, precio = ?, stock = ?
       WHERE id = ?
     `;
-    db.run(query, [producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.id], function (err) {
-      if (err) {
-        console.error('Error actualizando producto:', err.message);
-        reject(err);
-      } else {
-        resolve({ actualizado: this.changes > 0 });
-      }
-      db.close();
-    });
-  });
+    const result = await runQuery(query, [producto.nombre, producto.descripcion, producto.precio, producto.stock, producto.id]);
+    return { actualizado: result.changes > 0 };
+  } catch (err) {
+    console.error('Error actualizando producto:', err.message);
+    throw err;
+  }
 });
 

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path1 = require('path');
 const logPath = path1.join(__dirname, 'log.txt');
 const logStream = fs.createWriteStream(logPath, { flags: 'a' });
+const { crearTablasSiNoExisten } = require('./handlers/dbSetup');
 
 process.stdout.write = process.stderr.write = logStream.write.bind(logStream);
 
@@ -56,4 +57,11 @@ process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
 
-
+crearTablasSiNoExisten()
+  .then(() => {
+    console.log('Tablas verificadas y creadas si no existían.');
+    // Aquí continúa la inicialización de la app
+  })
+  .catch(err => {
+    console.error('Error creando tablas:', err);
+  });
